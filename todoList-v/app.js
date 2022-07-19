@@ -1,21 +1,40 @@
 const express = require("express");
 const bodyParser=require("body-parser");
+const ejs=require("ejs");
+
+
 const app=express();
-app.use("view-engine","ejs");
+
+app.set('view engine','ejs');
+
 app.get("/",function(req,res){
     var today = new Date();
     var day =today.getDay();
     var week="";
-    if(day==6 || day==0){
-         week="weekend"
-        res.render("list",{kindOfDay:week});
-    }
-    else{
-        week="weekdays"
-        res.render("list",{kindOfDay:week});
-        res.send(__dirnamee+"/weekdays.html")
-    }
-    res.send("Hello");
+   switch(day){
+       case 0:
+         week="Sunday";
+         break;
+       case 1:
+          week="Monday";
+          break;
+        case 2:
+          week="Tuesday";
+          break;
+       case 3:
+          week="Wednesday";
+          break;
+       case 4:
+          week="Thursday";
+          break;   
+       case 5:
+          week="Friday";
+          break;  
+       case 6:
+          week="Saturday";
+          break;  
+   }
+    res.render("list",{kindOfDay:week});
 });
 
 app.listen(4000,function(req,res){
